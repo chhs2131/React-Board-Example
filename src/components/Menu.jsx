@@ -5,13 +5,22 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import {Route, Routes} from "react-router-dom";
+import {Route, Routes, useNavigate} from "react-router-dom";
 import About from "./About";
 import Cart from "./book/Cart";
 import Books from "./book/Books";
 import Login from "./user/Login";
 
 const Menu = () => {
+    const navi = useNavigate();
+    const onLogout = (e) => {
+        e.preventDefault();
+        if(window.confirm("정말로 로그아웃하실건가요?")) {
+            sessionStorage.clear();
+            navi('/');
+        }
+    }
+
     return (
         <>
             <Navbar expand="lg" bg="primary" data-bs-theme="dark" className="bg-body-tertiary">
@@ -29,23 +38,20 @@ const Menu = () => {
 
                         </Nav>
 
-                        <Nav>
-                            <Nav.Link href="/login">로그인</Nav.Link>
-                        </Nav>
-
-                        {/*<Form className="d-flex">*/}
-                        {/*    <Form.Control*/}
-                        {/*        type="search"*/}
-                        {/*        placeholder="Search"*/}
-                        {/*        className="me-2"*/}
-                        {/*        aria-label="Search"*/}
-                        {/*    />*/}
-                        {/*    <Button variant="outline-success">Search</Button>*/}
-                        {/*</Form>*/}
-
+                        {sessionStorage.getItem('email') ?
+                            <Nav>
+                                <Nav.Link href="/login" disabled>{sessionStorage.getItem('email')}</Nav.Link>
+                                <Nav.Link href="/login" onClick={onLogout}>로그아웃</Nav.Link>
+                            </Nav>
+                            :
+                            <Nav>
+                                <Nav.Link href="/login">로그인</Nav.Link>
+                            </Nav>
+                        }
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
+
             <Routes>
                 <Route path="/" element={<About/>}/>
                 <Route path="/cart" element={<Cart/>}/>
