@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { app } from '../../firebaseInit'
+import { app, db } from '../../firebaseInit'
 import { getDatabase, onValue, ref, remove } from "firebase/database";
 import {Table} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
@@ -7,26 +7,9 @@ import axios from "axios";
 
 const Cart = () => {
     const uid = sessionStorage.getItem('uid');
-    const db = getDatabase(app);
 
-    const [loading, setLoading] = useState()
+    const [loading, setLoading] = useState(false)
     const [books, setBooks] = useState([]);
-
-    // /////////////////////////////////
-    // const [query, setQuery] = useState('인하대');
-    // const [page, setPage] = useState(1);
-    // const callAPI2 = async () => {
-    //     const url = `https://dapi.kakao.com/v3/search/book?target=title&query=${query}&page=${page}`;
-    //     const config = {
-    //         headers: {"Authorization": "KakaoAK a130d4bc5b0df2dd600ac87ffdda755a"}
-    //     }
-    //
-    //     setLoading(true);
-    //     const res = await axios.get(url, config);
-    //     setBooks(res.data.documents)
-    //     setLoading(false);
-    // }
-    // /////////////////////////////////
 
     const callAPI = () => {
         setLoading(true);
@@ -39,9 +22,10 @@ const Cart = () => {
             });
 
             console.log(rows);
+            setBooks(rows);
+            setLoading(false);
         });
 
-        setLoading(false);
     }
 
     const onClickDelete = (book) => {
@@ -75,7 +59,7 @@ const Cart = () => {
                         <td>{book.title}</td>
                         <td>{book.price}</td>
                         <td>{book.authors}</td>
-                        <td><Button>삭제</Button></td>
+                        <td><Button className="btn-sm" variant="danger" onClick={() => onClickDelete(book)}>삭제</Button></td>
                     </tr>
                 )}
                 </tbody>

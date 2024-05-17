@@ -5,11 +5,12 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import {FaCartShopping} from "react-icons/fa6";
 import {useNavigate} from "react-router-dom";
-import {app} from '../../firebaseInit';
-import {getDatabase, ref, set, get} from 'firebase/database'
+import { app, db } from "../../firebaseInit";
+import { getDatabase, ref, set, get } from "firebase/database";
+
 
 const Books = () => {
-    const db = getDatabase(app);
+    // const db = getDatabase(app);
     const navi = useNavigate();
     const uid = sessionStorage.getItem('uid');
 
@@ -19,7 +20,7 @@ const Books = () => {
     const [page, setPage] = useState(1);
 
     const callAPI = async () => {
-        const url = `https://dapi.kakao.com/v3/search/book?target=title&query=${query}&page=${page}`;
+        const url = `https://dapi.kakao.com/v3/search/book?target=title&query=${query}&page=${page}&size=12`;
         const config = {
             headers: {"Authorization": "KakaoAK a130d4bc5b0df2dd600ac87ffdda755a"}
         }
@@ -32,13 +33,18 @@ const Books = () => {
 
     useEffect(() => {
         callAPI();
+
+        set(ref(db, "test/" + "abcd"), {
+            "123":
+            "44567",
+        });
     }, [page]);
 
     const onSubmit = (e) => {
         e.preventDefault();
         setPage(1);
         callAPI();
-    }
+    };
 
     const onClickCart = (book) => {
         if (uid) {
@@ -57,7 +63,8 @@ const Books = () => {
             sessionStorage.setItem('target', '/books');
             navi('/login');
         }
-    }
+    };
+
 
     if (loading) return <h1 className='my-3'>로딩중입니다...</h1>
     return (
@@ -88,7 +95,12 @@ const Books = () => {
                                     {book.title}
                                 </div>
 
-                                <FaCartShopping onClick={() => onClickCart(book)}/>
+                                <FaCartShopping
+                                    style={{
+                                        cursor: "pointer",
+                                        fontSize: "20px",
+                                        color: "green",
+                                    }} onClick={() => onClickCart(book)}/>
                             </Card.Footer>
                         </Card>
                     </Col>
