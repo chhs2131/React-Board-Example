@@ -40,6 +40,7 @@ const Locals = () => {
         callAPI();
     };
 
+    if (loading) return <h1 className='my-3'>로딩중입니다...</h1>
     const onClickFavortie = async(local) => {
         if (!uid) {
             sessionStorage.setItem('target', '/locals');

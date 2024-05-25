@@ -37,6 +37,7 @@ const Favorite = () => {
         callAPI();
     }, []);
 
+    if (loading) return <h1 className='my-3'>로딩중입니다...</h1>
     return (
         <div>
             <h1 className='my-3'>즐겨찾기</h1>
