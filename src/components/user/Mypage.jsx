@@ -1,15 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {Card, Col, InputGroup, Row} from "react-bootstrap";
-import InputGroupText from "react-bootstrap/InputGroupText";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import {app, fs} from '../../firebaseInit';
-import {getFirestore, doc, setDoc, getDoc} from 'firebase/firestore';
+import {fs} from '../../firebaseInit';
+import {doc, setDoc, getDoc} from 'firebase/firestore';
 import ModalAddress from "./ModalAddress";
 import ModalPhoto from "./ModalPhoto";
 
 const MyPage = () => {
-    const db = getFirestore(app);
     const uid = sessionStorage.getItem('uid');
     const [loading, setLoading] = useState(false)
 
