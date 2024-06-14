@@ -10,13 +10,16 @@ import Pagination from 'react-js-pagination';
 import './paging.css'
 
 const ListPage = () => {
+    const [loading, setLoading] = useState(false)
+    const q = query(collection(fs, 'posts'), orderBy('date', 'desc'));
+
     const email = sessionStorage.getItem('email');
     const uid = sessionStorage.getItem('uid');
     const [posts, setPosts] = useState([]);
 
     // 페이지네이션
     const [page, setPage] = useState(1);
-    const [size, setSize] = useState(3);
+    const [size, setSize] = useState(5);
     const [count, setCount] = useState(1);
 
 
@@ -48,43 +51,49 @@ const ListPage = () => {
         callAPI();
     }, [page]);
 
+    if (loading) return <h1 className='my-3'>로딩중입니다...</h1>
     return (
-        <Row>
-            <Col xs={12} md={10} lg={8}>
-                <h1>게시글목록</h1>
-                {uid && <div><Button className='px-5'>글쓰기</Button></div>}
+        <div>
+            <h1 className='my-3'>게시글목록</h1>
+            {/*<Row>*/}
+            {/*    <Col xs={12} md={10} lg={8}>*/}
+                    {uid && <div><a href='/bbs/insert'>
+                        <Button className='px-5'>글쓰기</Button>
+                    </a>
+                    </div>}
 
-                <Table>
-                    <thead>
-                    <tr>
-                        <td>No.</td>
-                        <td>Title</td>
-                        <td>Writer</td>
-                        <td>Date</td>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {posts.map(post =>
-                        <tr key={post.id}>
-                            <td>{post.no}</td>
-                            <td><a href={`/bbs/read/${post.id}`}>{post.title}</a></td>
-                            <td>{post.email}</td>
-                            <td>{post.date}</td>
+                    <Table className='mt-3'>
+                        <thead>
+                        <tr>
+                            <td>No.</td>
+                            <td>Title</td>
+                            <td>Writer</td>
+                            <td>Date</td>
                         </tr>
-                    )}
-                    </tbody>
-                </Table>
+                        </thead>
+                        <tbody>
+                        {posts.map(post =>
+                            <tr key={post.id}>
+                                <td>{post.no}</td>
+                                <td><a href={`/bbs/read/${post.id}`}>{post.title}</a></td>
+                                <td>{post.email}</td>
+                                <td>{post.date}</td>
+                            </tr>
+                        )}
+                        </tbody>
+                    </Table>
 
-                <Pagination className="pagination"
-                            activePage={page}
-                            itemsCountPerPage={size}
-                            totalItemsCount={count}
-                            pageRangeDisplayed={5}
-                            prevPageText={"‹"}
-                            nextPageText={"›"}
-                            onChange={(e)=>setPage(e)}/>
-            </Col>
-        </Row>
+                    <Pagination className="pagination"
+                                activePage={page}
+                                itemsCountPerPage={size}
+                                totalItemsCount={count}
+                                pageRangeDisplayed={5}
+                                prevPageText={"‹"}
+                                nextPageText={"›"}
+                                onChange={(e) => setPage(e)}/>
+            {/*    </Col>*/}
+            {/*</Row>*/}
+        </div>
     );
 };
 

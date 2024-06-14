@@ -64,7 +64,7 @@ const MyPage = () => {
                     <Card.Body>
                         <form onSubmit={onSubmit}>
                             <ModalPhoto setLoading={setLoading} form={form} setForm={setForm}></ModalPhoto>
-                            <InputGroup className='mb-2'>
+                            <InputGroup className='mb-2 mt-2'>
                                 <InputGroup.Text>이름</InputGroup.Text>
                                 <Form.Control name="name" value={name} onChange={onChangeForm}></Form.Control>
                             </InputGroup>

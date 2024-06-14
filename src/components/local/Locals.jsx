@@ -45,6 +45,7 @@ const Locals = () => {
         if (!uid) {
             sessionStorage.setItem('target', '/locals');
             navi('/login');
+            return;
         }
 
         if (window.confirm("즐겨찾기에 추가할까요?")) {

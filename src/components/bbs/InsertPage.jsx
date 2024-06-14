@@ -33,15 +33,19 @@ const InsertPage = () => {
         console.log(data);
 
         await addDoc(collection(fs, 'posts'), data);
+        window.location.href = "/bbs";
     }
     return (
         <Row className='my-5 justify-content-center'>
             <Col xs={12} md={10} lg={8}>
                 <h1>글쓰기</h1>
                 <div className='mt-5'>
+                    <span>제목</span>
                     <Form.Control onChange={onChangeForm} name="title" value={title} placeholder='제목을 입력하세요' className='mb-2'/>
+
+                    <span>내용</span>
                     <Form.Control onChange={onChangeForm} name="contents" value={contents} as="textarea" rows={10} placeholder='내용을 입력하세요!'/>
-                    <div>
+                    <div className='mt-2'>
                         <Button onClick={onInsert} className='px-5 me-2'>등록</Button>
                         <Button variant='secondary'>취소</Button>
                     </div>

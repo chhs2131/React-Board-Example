@@ -11,8 +11,8 @@ const Join = () => {
     const auth = getAuth(app);
     const [loading, setLoading] = useState(false)
     const [form, setForm] = useState({
-        email: 'blue@test.com',
-        pass: '12341234'
+        email: '',
+        pass: ''
     })
     const {email, pass} = form;
     const onChange = (e) => {
@@ -61,9 +61,9 @@ const Join = () => {
                         <form onSubmit={onSubmit}>
                             <InputGroup className='mb-2'>
                                 <InputGroup.Text style={{width: 100}} className='justify-content-center'>
-                                    회원가입
+                                    이메일
                                 </InputGroup.Text>
-                                <Form.Control name="email" value={email} onChange={onChange}/>
+                                <Form.Control name="email" value={email} onChange={onChange} placeholder="ooo@naver.com"/>
                             </InputGroup>
 
                             <InputGroup className='mb-2'>

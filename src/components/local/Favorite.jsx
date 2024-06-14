@@ -26,7 +26,7 @@ const Favorite = () => {
     }
 
     const onClickDelete = (local) => {
-        if (window.confirm(`${local.id}을 장바구니에서 삭제하시겠습니까?`)) {
+        if (window.confirm(`${local.id}을 즐겨찾기에서 삭제하시겠습니까?`)) {
             setLoading(true);
             remove(ref(db, `favorite/${uid}/${local.id}`));
             setLoading(false);

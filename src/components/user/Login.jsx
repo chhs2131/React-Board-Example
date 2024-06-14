@@ -38,8 +38,9 @@ const Login = () => {
                         const target = sessionStorage.getItem('target');
                         sessionStorage.removeItem('target');
                         navi(target);
+                    } else {
+                        navi('/');
                     }
-                    navi('/');
                 })
                 .catch(error => {
                     alert("에러: " + error.message);
